@@ -1,9 +1,11 @@
 class node{
-    constructor(value){
-        this.value = value
+    constructor(values){
+        this.values = values
         this.vertices = []
     }
 }
+
+
 
 function kinghtTravails(){
     let board = []
@@ -15,7 +17,27 @@ function kinghtTravails(){
          board.push(ls)
     }
 
+    function positionExists(values){
+        if (values[0] <= 7 && values[1] <= 7){
+            return true
+        }
+        return false
+    }
+    // I should find a better idea  
+    function movementOptionsKinght(knight){
+        // if(positionExists(knight.values)){
+        //     if(positionExists(knight.values[0],knight.values[1]))
+        //     if(positionExists())
+        //     if(positionExists())
+        //     if(positionExists())
+            
+        // }
+        return 
+    }
+
     console.table(board)
+    
+    
 }
 
 kinghtTravails()
