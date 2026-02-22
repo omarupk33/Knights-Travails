@@ -1,9 +1,10 @@
 class node{
     constructor(value){
         this.value = value
+        this.location = null
         this.vertices = []
+        }
     }
-}
 
 
 
@@ -12,7 +13,10 @@ function kinghtTravails(){
     for(let i = 0; i < 8; i++){
         let ls = []
         for (let j = 0; j < 8;j++){
-                ls.push(new node(0))
+            let position =new node(0)
+            position.location = [j,i]
+            savePossibleMovement(position)
+            ls.push(position)
          }
          board.push(ls)
     }
@@ -22,29 +26,42 @@ function kinghtTravails(){
         for(list of board){
             let row = []
             for (theNode of list){
-                row.push(theNode.value)
+                row.push(theNode.location)
             }
             printBoard.push(row)
-
         }
 
         console.table(printBoard)
     }
     function positionExists(values){
-        if (values[0] <= 7 && values[1] <= 7){
+        if (0 <= values[0] && values[0] <= 7 &&
+            0 <= values[1] && values[1] <= 7){
             return true
         }
         return false
     }
-    // I should find a better idea  
-    function movementOptionsKinght(movement){
-        if(positionExists([movement.values[0],movement.values[1]]))
 
-            
-        return 
+    
+ 
+    function savePossibleMovement(node){
+        let potentialMoves =[[node.location[0]+2,node.location[1]+1],
+                             [node.location[0]+1,node.location[1]+2],
+                             [node.location[0]+2,node.location[1]-1],
+                             [node.location[0]+1,node.location[1]-1],
+                             [node.location[0]-2,node.location[1]+1],
+                             [node.location[0]-1,node.location[1]+2],
+                             [node.location[0]-2,node.location[1]-1],
+                             [node.location[0]-1,node.location[1]-2],]
+
+        for(let potentialMove of potentialMoves){
+            if(positionExists(potentialMove)){
+                node.vertices.push(potentialMove)
+            }
+        }
     }
-    board[1][0].value =1
-    printBoard()
+
+    console.log(board[0][0].vertices)
+    // printBoard()
     
     
 }
