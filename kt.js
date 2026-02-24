@@ -21,43 +21,60 @@ function kinghtTravails(){
          board.push(ls)
     }
 
+    // Something is wrong here
     function bestRoute(goalLocation, bunchOfLocations){
+        if(!Array.isArray(bunchOfLocations)){return }
+        if(!positionExists(goalLocation)){return }
+
         let nearestX 
         let nearestY
         let listOfXs = []
         let listOfYs = []
 
         function nearest(goal, arr){
-            return arr.reduce((prev, curr) => {
+            return arr.reduce((prev, curr)=>{
             return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
             })
         }
 
         for(let i = 0; i < bunchOfLocations.length; i++){
+            
             listOfXs.push(bunchOfLocations[i][0])
         }
-        nearestX = nearest(goalLocation[0],listOfXs)
-        console.log(nearestX)
+        if(!listOfXs.length!== 0) nearestX = nearest(goalLocation[0],listOfXs)
+
 
         for(let pairs of bunchOfLocations){
             if (pairs.at(0) === nearestX){
                 listOfYs.push(pairs.at(1))
             }
         }
-        nearestY = nearest(goalLocation[1], listOfYs)
+        if(listOfYs.length !== 0) nearestY = nearest(goalLocation[1], listOfYs)
 
+     
         return [nearestX, nearestY]
     }
 
-    function traverseTo(goalLocation){
+    function traverseTo(goalLocation, startLocation= [0,0]){
+        // Still needs fixing
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
-        //  insert vertices into best route then go to that vertex until goalLocation is found
-         let queue = board.vertices
-         while(queue){
-          for (movementSet of queue.at(-1)){
-            return null
-          }  
-         }
+         if(!positionExists(startLocation)){return}
+
+        if (
+        goalLocation[0] === startLocation[0] &&
+        goalLocation[1] === startLocation[1]
+        ) {
+        return startLocation;
+        }
+
+         let bestRoutePair = bestRoute(goalLocation, board[startLocation[0]][startLocation[1]].vertices)
+         let found = traverseTo(goalLocation, bestRoutePair)
+
+         board[startLocation[0]][startLocation[1]].value = 1
+
+         printBoard()
+
+         console.log(found)
     }
 
     function printBoard(){
@@ -65,7 +82,7 @@ function kinghtTravails(){
         for(list of board){
             let row = []
             for (theNode of list){
-                row.push(theNode.location)
+                row.push(theNode.value)
             }
             printBoard.push(row)
         }
@@ -99,10 +116,10 @@ function kinghtTravails(){
         }
     }
 
-    console.log(bestRoute([2,3], board[3][3].vertices))
+    // console.log(bestRoute([2,3], board[0][0].vertices))
     // printBoard()
-    
-    
+    traverseTo([4,3])
+
 }
 
 kinghtTravails()
