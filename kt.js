@@ -56,7 +56,7 @@ function kinghtTravails(){
     }
 
     function traverseTo(goalLocation, startLocation= [0,0]){
-        // Still needs fixing
+        // Worked yet it might not give me the shortest path
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
          if(!positionExists(startLocation)){return}
 
@@ -64,6 +64,8 @@ function kinghtTravails(){
         goalLocation[0] === startLocation[0] &&
         goalLocation[1] === startLocation[1]
         ) {
+        board[startLocation[0]][startLocation[1]].value = 2
+        
         return startLocation;
         }
 
@@ -103,7 +105,7 @@ function kinghtTravails(){
         let potentialMoves =[[node.location[0]+2,node.location[1]+1],
                              [node.location[0]+1,node.location[1]+2],
                              [node.location[0]+2,node.location[1]-1],
-                             [node.location[0]+1,node.location[1]-1],
+                             [node.location[0]+1,node.location[1]-2],
                              [node.location[0]-2,node.location[1]+1],
                              [node.location[0]-1,node.location[1]+2],
                              [node.location[0]-2,node.location[1]-1],
