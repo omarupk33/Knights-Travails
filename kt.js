@@ -68,11 +68,10 @@ function kinghtTravails(){
         
         return startLocation;
         }
-
+        // Should be changed to a queue with a bfs while queue use!
          let bestRoutePair = bestRoute(goalLocation, board[startLocation[0]][startLocation[1]].vertices)
          let found = traverseTo(goalLocation, bestRoutePair)
 
-         board[startLocation[0]][startLocation[1]].value = 1
 
          printBoard()
 
