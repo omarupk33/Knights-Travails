@@ -22,7 +22,7 @@ function kinghtTravails(){
     }
 
     // Something is wrong here
-    function bestRoute(goalLocation, bunchOfLocations){
+    function bestRoute(bunchOfLocations, goalLocation){
         if(!Array.isArray(bunchOfLocations)){return }
         if(!positionExists(goalLocation)){return }
 
@@ -54,28 +54,30 @@ function kinghtTravails(){
      
         return [nearestX, nearestY]
     }
-
-    function traverseTo(goalLocation, startLocation= [0,0]){
+    //  Something is wrong
+    function traverseTo(startLocation= [0,0], goalLocation){
         // Worked yet it might not give me the shortest path
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
          if(!positionExists(startLocation)){return}
 
-        if (
-        goalLocation[0] === startLocation[0] &&
-        goalLocation[1] === startLocation[1]
-        ) {
-        board[startLocation[0]][startLocation[1]].value = 2
-        
-        return startLocation;
+         let queue = []
+        queue.push(startLocation)
+        let bestRoutePair
+
+        while(queue){
+            let current = queue[0]
+            bestRoutePair = bestRoute(board[current[0]][current[1]].vertices, goalLocation)
+            if(bestRoutePair === goalLocation){
+                break
+            }
+
+            queue.push(bestRoutePair)
+            queue.shift()
+
+        console.log(bestRoutePair)
+        console.log(goalLocation)
+
         }
-        // Should be changed to a queue with a bfs while queue use!
-         let bestRoutePair = bestRoute(goalLocation, board[startLocation[0]][startLocation[1]].vertices)
-         let found = traverseTo(goalLocation, bestRoutePair)
-
-
-         printBoard()
-
-         console.log(found)
     }
 
     function printBoard(){
@@ -119,7 +121,7 @@ function kinghtTravails(){
 
     // console.log(bestRoute([2,3], board[0][0].vertices))
     // printBoard()
-    traverseTo([4,3])
+    traverseTo([0,0],[4,3])
 
 }
 
