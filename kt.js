@@ -21,8 +21,8 @@ function kinghtTravails(){
          board.push(ls)
     }
 
-    // Something is wrong here
-    function bestRoute(bunchOfLocations, goalLocation){
+    // Need to implify the change
+    function takingRoute(startLocation, goalLocation){
         if(!Array.isArray(bunchOfLocations)){return }
         if(!positionExists(goalLocation)){return }
 
@@ -62,22 +62,31 @@ function kinghtTravails(){
 
          let queue = []
         queue.push(startLocation)
-        let bestRoutePair
+        let takingRoutePair
 
-        while(queue){
-            let current = queue[0]
-            bestRoutePair = bestRoute(board[current[0]][current[1]].vertices, goalLocation)
-            if(bestRoutePair === goalLocation){
-                break
+        while(queue.length !== 0){
+        // console.log(takingRoutePair)
+        let current = queue[0]
+            for(let vertex of board[current[0]][current[1]].vertices){
+                queue.push(vertex)
             }
 
-            queue.push(bestRoutePair)
-            queue.shift()
+        // Change from taking a bunch of locations, to start location or starting Route 
+        takingRoutePair = takingRoute(board[current[0]][current[1]].vertices, goalLocation)
 
-        console.log(bestRoutePair)
-        console.log(goalLocation)
+        queue.push(takingRoutePair)
+        queue.shift()
+
+        board[takingRoutePair[0]][takingRoutePair[1]].value = 1
+        if(takingRoutePair[0] === goalLocation[0] && 
+            takingRoutePair[1] === goalLocation[1]){
+                break}
+
+        // console.log(goalLocation)
 
         }
+
+        printBoard()
     }
 
     function printBoard(){
@@ -119,9 +128,9 @@ function kinghtTravails(){
         }
     }
 
-    // console.log(bestRoute([2,3], board[0][0].vertices))
+
     // printBoard()
-    traverseTo([0,0],[4,3])
+    traverseTo([0,0],[6,6])
 
 }
 
