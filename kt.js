@@ -7,7 +7,6 @@ class node{
     }
 
 
-
 function kinghtTravails(){
     let board = []
     for(let i = 0; i < 8; i++){
@@ -21,69 +20,40 @@ function kinghtTravails(){
          board.push(ls)
     }
 
-    // Need to implify the change
-    function takingRoute(startLocation, goalLocation){
-        if(!Array.isArray(bunchOfLocations)){return }
-        if(!positionExists(goalLocation)){return }
-
-        let nearestX 
-        let nearestY
-        let listOfXs = []
-        let listOfYs = []
-
-        function nearest(goal, arr){
-            return arr.reduce((prev, curr)=>{
-            return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
-            })
-        }
-
-        for(let i = 0; i < bunchOfLocations.length; i++){
-            
-            listOfXs.push(bunchOfLocations[i][0])
-        }
-        if(!listOfXs.length!== 0) nearestX = nearest(goalLocation[0],listOfXs)
-
-
-        for(let pairs of bunchOfLocations){
-            if (pairs.at(0) === nearestX){
-                listOfYs.push(pairs.at(1))
-            }
-        }
-        if(listOfYs.length !== 0) nearestY = nearest(goalLocation[1], listOfYs)
-
-     
-        return [nearestX, nearestY]
-    }
-    //  Something is wrong
-    function traverseTo(startLocation= [0,0], goalLocation){
+    // Focus here
+    function knightMoves(startLocation= [0,0], goalLocation){
         // Worked yet it might not give me the shortest path
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
          if(!positionExists(startLocation)){return}
 
-         let queue = []
-        queue.push(startLocation)
-        let takingRoutePair
 
+         let queue = [startLocation]
+        let visited = []
+        let saveRoute = []
         while(queue.length !== 0){
-        // console.log(takingRoutePair)
-        let current = queue[0]
-            for(let vertex of board[current[0]][current[1]].vertices){
-                queue.push(vertex)
+            let current = queue[0]
+        
+            if(visited.includes(queue[0])){
+             board[queue[0][0]][queue[0][1]].value = 1
+            console.log(current)
+
+                queue.shift()
             }
 
-        // Change from taking a bunch of locations, to start location or starting Route 
-        takingRoutePair = takingRoute(board[current[0]][current[1]].vertices, goalLocation)
+                for(let vertex of board[current[0]][current[1]].vertices){
+                    queue.push(vertex)
+                }
 
-        queue.push(takingRoutePair)
-        queue.shift()
 
-        board[takingRoutePair[0]][takingRoutePair[1]].value = 1
-        if(takingRoutePair[0] === goalLocation[0] && 
-            takingRoutePair[1] === goalLocation[1]){
-                break}
 
-        // console.log(goalLocation)
+            if(current[0] === goalLocation[0] && 
+               current[1] === goalLocation[1]){
+                board[current[0]][current[1]].value = 2
+                break
+            }
 
+
+        visited.push(queue.shift())
         }
 
         printBoard()
@@ -128,9 +98,7 @@ function kinghtTravails(){
         }
     }
 
-
-    // printBoard()
-    traverseTo([0,0],[6,6])
+    knightMoves([0,0],[2,2])
 
 }
 
