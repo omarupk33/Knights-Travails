@@ -20,6 +20,31 @@ function kinghtTravails(){
          board.push(ls)
     }
 
+
+    function tracker(node, listOfLocations){
+        // It's here
+        let added = false
+        if(listOfLocations.length === 0 || listOfLocations === undefined){
+            for(let vertex of node.vertices)
+            listOfLocations.push([node.location, vertex])
+            return listOfLocations
+        }
+
+        for(let i = 0; i < listOfLocations.length;i++){
+            if(node.location[0] === listOfLocations[i][-1][0]&&
+               node.location[1] === listOfLocations[i][-1][1]){
+                listOfLocations[i][-1].push(node.location) 
+                added = true
+            }
+        }
+
+        if(added === false){
+            listOfLocations.push([node.location])
+        }
+        return listOfLocations
+    
+    }
+
     // Focus here
     function knightMoves(startLocation= [0,0], goalLocation){
         // Worked yet it might not give me the shortest path
@@ -34,27 +59,31 @@ function kinghtTravails(){
             let current = queue[0]
         
             if(visited.includes(queue[0])){
-             board[queue[0][0]][queue[0][1]].value = 1
-            console.log(current)
-
                 queue.shift()
             }
+
 
                 for(let vertex of board[current[0]][current[1]].vertices){
                     queue.push(vertex)
                 }
 
-
-
+            saveRoute = tracker(board[current[0]][current[1]], saveRoute)
+            
             if(current[0] === goalLocation[0] && 
                current[1] === goalLocation[1]){
-                board[current[0]][current[1]].value = 2
-                break
+                // board[current[0]][current[1]].value = 2
+            break
             }
 
-
-        visited.push(queue.shift())
+            visited.push(current)
+            queue.shift()            
         }
+
+        saveRoute.forEach(route => {
+            // if(route[-1] === goalLocation){
+                console.log(route)
+            // }
+        })
 
         printBoard()
     }
