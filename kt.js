@@ -20,7 +20,7 @@ function kinghtTravails(){
          board.push(ls)
     }
 
-
+    // the issue is here 
     function tracker(node, listOfLocations){
         // It's here
         let added = false
@@ -34,7 +34,7 @@ function kinghtTravails(){
             //  console.log(listOfLocations[i][])
 
                listOfLocations[i].push(node.location) 
-                added = true
+                // added = true
             }
         }
 
