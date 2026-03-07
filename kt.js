@@ -20,7 +20,7 @@ function kinghtTravails(){
          board.push(ls)
     }
 
-    // the issue is here 
+    // the issue is here
     function tracker(node, listOfLocations){
         // It's here
         let added = false
@@ -52,7 +52,7 @@ function kinghtTravails(){
          if(!positionExists(startLocation)){return}
 
 
-         let queue = [startLocation]
+        let queue = [startLocation]
         let visited = []
         let saveRoute = []
         while(queue.length !== 0){
@@ -62,14 +62,13 @@ function kinghtTravails(){
                 queue.shift()
             }
 
-
                 for(let vertex of board[current[0]][current[1]].vertices){
                     queue.push(vertex)
                 }
   
             saveRoute = tracker(board[current[0]][current[1]], saveRoute)
             
-            if(current[0] === goalLocation[0] && 
+            if(current[0] === goalLocation[0] &&
                current[1] === goalLocation[1]){
                 // board[current[0]][current[1]].value = 2
             break
@@ -79,11 +78,11 @@ function kinghtTravails(){
             queue.shift()            
         }
 
-        saveRoute.forEach(route => {
-            // if(route[-1] === goalLocation){
-                console.log(route)
-            // }
-        })
+        // saveRoute.forEach(route => {
+        //     if(route[-1] === goalLocation){
+        //         console.log(route)
+        //     }
+        // })
 
         printBoard()
     }
@@ -108,7 +107,6 @@ function kinghtTravails(){
         return false
     }
 
-    
  
     function savePossibleMovement(node){
         let potentialMoves =[[node.location[0]+2,node.location[1]+1],
@@ -127,7 +125,7 @@ function kinghtTravails(){
         }
     }
 
-    knightMoves([0,0],[2,2])
+    knightMoves([0,0],[4,2])
 
 }
 
