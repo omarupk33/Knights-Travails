@@ -20,34 +20,7 @@ function kinghtTravails(){
          board.push(ls)
     }
 
-    // the issue is here
-    function tracker(node, listOfLocations){
-        // It's here
-        let added = false
-        if(listOfLocations.length === 0 || listOfLocations === undefined){
-            for(let vertex of node.vertices) listOfLocations.push([node.location, vertex])
-            return listOfLocations
-        }
-        for(let i = 0; i < listOfLocations.length;i++){
-            if(node.location[0] === listOfLocations[i][listOfLocations[i].length - 1][0]&&
-               node.location[1] === listOfLocations[i][listOfLocations[i].length - 1][1]){
-            //  console.log(listOfLocations[i][])
-
-               listOfLocations[i].push(node.location) 
-                // added = true
-            }
-        }
-
-        if(added === false){
-            listOfLocations.push([node.location])
-        }
-        return listOfLocations
-    
-    }
-
-    // Focus here
     function knightMoves(startLocation= [0,0], goalLocation){
-        // Worked yet it might not give me the shortest path
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
          if(!positionExists(startLocation)){return}
 
@@ -57,32 +30,28 @@ function kinghtTravails(){
         let saveRoute = []
         while(queue.length !== 0){
             let current = queue[0]
-        
-            if(visited.includes(queue[0])){
-                queue.shift()
-            }
 
-                for(let vertex of board[current[0]][current[1]].vertices){
-                    queue.push(vertex)
+            for(let vertex of board[current[0]][current[1]].vertices){
+                if(visited.includes(vertex)){
+                    continue
                 }
-  
-            saveRoute = tracker(board[current[0]][current[1]], saveRoute)
+                else{queue.push(vertex)}
+            }
             
             if(current[0] === goalLocation[0] &&
                current[1] === goalLocation[1]){
-                // board[current[0]][current[1]].value = 2
-            break
+
+                break
             }
+
 
             visited.push(current)
             queue.shift()            
         }
 
-        // saveRoute.forEach(route => {
-        //     if(route[-1] === goalLocation){
-        //         console.log(route)
-        //     }
-        // })
+        saveRoute.forEach(route => {
+               console.log(route)
+        })
 
         printBoard()
     }
@@ -125,7 +94,7 @@ function kinghtTravails(){
         }
     }
 
-    knightMoves([0,0],[4,2])
+    knightMoves([0,0],[2,2])
 
 }
 
