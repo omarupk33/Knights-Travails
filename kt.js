@@ -24,10 +24,11 @@ function kinghtTravails(){
          if(!positionExists(goalLocation)){throw Error("doesn't exist")}
          if(!positionExists(startLocation)){return}
 
-
         let queue = [startLocation]
-        let visited = []
-        let saveRoute = []
+        // Change according to this
+        let visited = {[queue[0]]:true}
+
+        let predecessor = []
         while(queue.length !== 0){
             let current = queue[0]
 
@@ -40,7 +41,6 @@ function kinghtTravails(){
             
             if(current[0] === goalLocation[0] &&
                current[1] === goalLocation[1]){
-
                 break
             }
 
