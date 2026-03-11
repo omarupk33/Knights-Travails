@@ -117,57 +117,34 @@ kinghtTravails()
 //     const globalVisited = new Set(); 
 
 //     // Helper function to perform a single BFS traversal within a component
-//     function bfs(startNode, endNode) {
-//         // Queue stores paths, not just individual nodes, to reconstruct the final path
-//         const queue = [[startNode]];
-//         const localVisited = new Set([startNode]); // Visited within current component's BFS
 
-//         while (queue.length > 0) {
-//             const path = queue.shift();
-//             const currentNode = path[path.length - 1];
 
-//             if (currentNode === endNode) {
-//                 return path; // Path found
-//             }
+    // Try to copy the functionality of this function and add it to the code
+    function bfs(startNode, endNode) {
+        // Queue stores paths, not just individual nodes, to reconstruct the final path
+        const queue = [[startNode]];
+        const localVisited = new Set([startNode]); // Visited within current component's BFS
 
-//             // Mark node as visited globally
-//             globalVisited.add(currentNode); 
+        while (queue.length > 0) {
+            const path = queue.shift();
+            const currentNode = path[path.length - 1];
 
-//             // Explore neighbors
-//             const neighbors = graph[currentNode] || [];
-//             for (const neighbor of neighbors) {
-//                 if (!localVisited.has(neighbor)) {
-//                     localVisited.add(neighbor);
-//                     const newPath = [...path, neighbor]; // Create a new path by appending the neighbor
-//                     queue.push(newPath);
-//                 }
-//             }
-//         }
-//         return null; // Path not found in this component
-//     }
+            if (currentNode === endNode) {
+                return path; // Path found
+            }
 
-//     // Iterate through all possible starting nodes (keys in the graph object)
-//     // to ensure all components are checked if the 'start' node isn't the actual entry
-//     // point or if we need to check *all* shortest paths between *any* two components (a different problem).
-//     // For a specific start-to-end path, we only need to call BFS once from the start node:
-//     if (graph.hasOwnProperty(start)) {
-//         return bfs(start, end);
-//     }
-    
-//     return null; // Start node not in the graph
-// }
+            // Mark node as visited globally
+            globalVisited.add(currentNode); 
 
-// // Example Usage with multiple components
-// const graphWithComponents = {
-//     'A': ['B'],
-//     'B': ['A', 'C'],
-//     'C': ['B'],
-//     'D': ['E', 'F'],
-//     'E': ['D'],
-//     'F': ['D', 'G'],
-//     'G': ['F']
-// };
-
-// console.log("Path A to C:", shortestPathInGraph(graphWithComponents, 'A', 'C')); // Output: [ 'A', 'B', 'C' ]
-// console.log("Path D to G:", shortestPathInGraph(graphWithComponents, 'D', 'G')); // Output: [ 'D', 'F', 'G' ]
-// console.log("Path A to G:", shortestPathInGraph(graphWithComponents, 'A', 'G')); // Output: null (disconnected)
+            // Explore neighbors
+            const neighbors = graph[currentNode] || [];
+            for (const neighbor of neighbors) {
+                if (!localVisited.has(neighbor)) {
+                    localVisited.add(neighbor);
+                    const newPath = [...path, neighbor]; // Create a new path by appending the neighbor
+                    queue.push(newPath);
+                }
+            }
+        }
+        return null; // Path not found in this component
+    }
